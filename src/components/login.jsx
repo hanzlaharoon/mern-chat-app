@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 export default class Login extends Component {
   constructor(props) {
@@ -38,30 +39,41 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className='form-wrapper'>
-        <Form onSubmit={this.onSubmit}>
-          <Form.Group controlId='Usename'>
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type='text'
-              value={this.state.username}
-              onChange={this.onChangeUsername}
-            />
-          </Form.Group>
+      <div className='row justify-content-center'>
+        <div className='col-5'>
+          <h2 class='text-center my-4'>Login</h2>
 
-          <Form.Group controlId='Password'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type='password'
-              value={this.state.password}
-              onChange={this.onChangePassword}
-            />
-          </Form.Group>
+          <div className='form-wrapper'>
+            <Form onSubmit={this.onSubmit}>
+              <Form.Group controlId='Usename'>
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type='text'
+                  value={this.state.username}
+                  onChange={this.onChangeUsername}
+                />
+              </Form.Group>
 
-          <Button variant='danger' size='lg' block='block' type='submit'>
-            Login
-          </Button>
-        </Form>
+              <Form.Group controlId='Password'>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type='password'
+                  value={this.state.password}
+                  onChange={this.onChangePassword}
+                />
+              </Form.Group>
+
+              <Button variant='danger' size='lg' block='block' type='submit'>
+                Login
+              </Button>
+            </Form>
+
+            <small>
+              Don't have an account?{' '}
+              <Link to={'/register'}>Create an account</Link>
+            </small>
+          </div>
+        </div>
       </div>
     );
   }
