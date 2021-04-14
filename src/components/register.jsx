@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default class Register extends Component {
   constructor(props) {
@@ -31,17 +32,30 @@ export default class Register extends Component {
     e.preventDefault();
 
     console.log(`Student successfully created!`);
-    console.log(`Name: ${this.state.username}`);
-    console.log(`Email: ${this.state.password}`);
+    console.log(`Username: ${this.state.username}`);
+    console.log(`Password: ${this.state.password}`);
 
-    this.setState({ name: '', email: '', rollno: '' });
+    const userObj = {
+      username: this.state.username.toLowerCase(),
+      password: this.state.password,
+    };
+
+    axios
+      .post('http://localhost:4000/user/register', userObj)
+      .then((res) => {
+        console.log('/user/register', res.data);
+        this.setState({ username: '', password: '' });
+      })
+      .catch((err) => {
+        console.log('Error', err);
+      });
   }
 
   render() {
     return (
       <div className='row justify-content-center'>
         <div className='col-5'>
-          <h2 class='text-center my-4'>Register</h2>
+          <h2 className='text-center my-4'>Register</h2>
 
           <div className='form-wrapper'>
             <Form onSubmit={this.onSubmit}>

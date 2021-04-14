@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default class Login extends Component {
   constructor(props) {
@@ -30,27 +31,48 @@ export default class Login extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    console.log(`Student successfully logged In!`);
+    // console.log(`Student successfully logged In!`);
     console.log(`Name: ${this.state.username}`);
     console.log(`Email: ${this.state.password}`);
 
-    this.setState({ name: '', email: '', rollno: '' });
+    const userObj = {
+      username: this.state.username.toLowerCase(),
+      password: this.state.password,
+    };
+
+    axios
+      .post('http://localhost:4000/user/login', userObj)
+      .then((res) => {
+        console.log('/user/login', res);
+        if (res.data !== null) {
+          console.log('Login Successfull');
+          this.setState({ username: '', password: '' });
+        } else {
+          console.log('Login Failed');
+        }
+      })
+      .catch((err) => {
+        console.log('Error', err);
+      });
   }
 
   render() {
     return (
       <div className='row justify-content-center'>
         <div className='col-5'>
-          <h2 class='text-center my-4'>Login</h2>
+          <h2 className='text-center my-4'>Login</h2>
 
           <div className='form-wrapper'>
             <Form onSubmit={this.onSubmit}>
-              <Form.Group controlId='Usename'>
+              <Form.Group controlId='Username'>
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type='text'
                   value={this.state.username}
                   onChange={this.onChangeUsername}
+                  //   required={true}
+                  //   min={4}
+                  //   max={15}
                 />
               </Form.Group>
 
@@ -60,10 +82,13 @@ export default class Login extends Component {
                   type='password'
                   value={this.state.password}
                   onChange={this.onChangePassword}
+                  //   required={true}
+                  //   min={3}
+                  //   max={15}
                 />
               </Form.Group>
 
-              <Button variant='danger' size='lg' block='block' type='submit'>
+              <Button variant='success' size='lg' block='block' type='submit'>
                 Login
               </Button>
             </Form>

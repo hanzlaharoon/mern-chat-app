@@ -30,13 +30,32 @@ router.route('/register').post((req, res, next) => {
 });
 
 // User Login
-router.route('/login').get((req, res, next) => {
-    userSchema.findOne(req.body)
+router.route('/login').all((req, res, next) => {
+    var username = req.body.username;
+    var password = req.body.password;
+
+    userSchema.findOne({ username: req.body.username })
         .then((user) => {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.json(user);
-        }, (err) => next(err))
+            if (user == null) {
+                var err = new Error('User ' + username + ' does not exist!');
+                err.status = 403;
+                return next(err);
+            }
+            else if (user.password !== password) {
+                var err = new Error('Your password is incorrect!');
+                err.status = 403;
+                return next(err);
+            }
+            else if (user.username === username && user.password === password) {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({ status: 'Login Successful!' });
+            } else {
+                var err = new Error('Unknown Error');
+                err.status = 403;
+                return next(err);
+            }
+        })
         .catch((err) => next(err));
 })
 
