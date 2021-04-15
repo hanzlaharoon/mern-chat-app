@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 // import ListGroup from 'react-bootstrap/ListGroup';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+// import Row from 'react-bootstrap/Row';
 
 export default class RightSidebar extends Component {
   constructor(props) {
@@ -19,15 +19,15 @@ export default class RightSidebar extends Component {
       { msg: 'Hello', sent: false },
       { msg: 'How Are You', sent: true },
       { msg: 'Is everthing fine', sent: false },
-      //   { msg: 'Hello', sent: false },
-      //   { msg: 'How Are You', sent: true },
-      //   { msg: 'Is everthing fine', sent: false },
-      //   { msg: 'Hello', sent: false },
-      //   { msg: 'How Are You', sent: true },
-      //   { msg: 'Is everthing fine', sent: false },
-      //   { msg: 'Hello', sent: false },
-      //   { msg: 'How Are You', sent: true },
-      //   { msg: 'Is everthing fine', sent: false },
+      // { msg: 'Hello', sent: false },
+      // { msg: 'How Are You', sent: true },
+      // { msg: 'Is everthing fine', sent: false },
+      // { msg: 'Hello', sent: false },
+      // { msg: 'How Are You', sent: true },
+      // { msg: 'Is everthing fine', sent: false },
+      // { msg: 'Hello', sent: false },
+      // { msg: 'How Are You', sent: true },
+      // { msg: 'Is everthing fine', sent: false },
     ];
     this.setState({ messages: msgsArr });
   }
@@ -48,22 +48,23 @@ export default class RightSidebar extends Component {
     });
     return (
       <>
-        <div className='spaceBtw'>
-          <Navbar
-            className='bg-light justify-content-between'
-            sticky='top'
-            expand='md'
-            style={{
-              paddingTop: '1rem',
-              paddingBottom: '1rem',
-              borderBottom: '1px solid',
-            }}
-          >
-            <Navbar.Brand href='#'>
-              <h2>Contact1</h2>
-            </Navbar.Brand>
-          </Navbar>
-        </div>
+        {/* <div className='spaceBtw'> */}
+        <Navbar
+          className='bg-light justify-content-between'
+          sticky='top'
+          expand='md'
+          style={{
+            paddingTop: '1rem',
+            paddingBottom: '1rem',
+            borderBottom: '1px solid',
+          }}
+        >
+          <Navbar.Brand href='#'>
+            <h2>Contact1</h2>
+          </Navbar.Brand>
+          <small>Group Members</small>
+        </Navbar>
+        {/* </div> */}
 
         <div className='content'>
           <div className='chatGrid'>{messagesView}</div>
