@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Login from "./components/login";
 import Register from "./components/register";
+import Chat from "./components/chat";
 
 function App() {
   return (<Router>
@@ -37,6 +38,12 @@ function App() {
                   Register
                 </Link>
               </Nav>
+
+              <Nav>
+                <Link to={"/chat"} className="nav-link">
+                  Chat
+                </Link>
+              </Nav>
             </Nav>
 
             {/* <Nav>
@@ -49,7 +56,7 @@ function App() {
         </Navbar>
       </header>
 
-      <Container>
+      <Container fluid>
         <Row>
           <Col md={12}>
             <div className="wrapper">
@@ -57,6 +64,7 @@ function App() {
                 <Route exact path='/' component={Login} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
+                <Route path="/chat" component={Chat} />
                 {/* <Route path="/edit-student/:id" component={EditStudent} /> */}
               </Switch>
             </div>

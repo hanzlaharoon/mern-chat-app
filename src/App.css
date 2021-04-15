@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 } */
+.spaceBtw {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.content {
+  /* flex: 1;
+  display: flex; */
+  /* overflow: hidden; */
+  height: 100%;
+}
+
+.chatGrid {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  /* min-height: min-content; */
+  width: 100%;
+  /* overflow: auto; */
+}
+
+.chatMsg {
+  padding: 8px;
+  background-color: gainsboro;
+  width: max-content;
+  border-radius: 8px;
+  margin: 0.5rem;
+}
+
+.sentMsg {
+  margin-left: auto;
+  background-color: lightblue;
+}
+
+.bottom {
+  /* position: absolute;
+  bottom: 0;
+  left: 0; */
+}
+
+.msgInput {
+  width: 100%;
+  border-radius: 10px;
+}
