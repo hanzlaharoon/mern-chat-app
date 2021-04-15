@@ -54,7 +54,7 @@ export default class Register extends Component {
   render() {
     return (
       <div className='row justify-content-center'>
-        <div className='col-5'>
+        <div className='col-4'>
           <h2 className='text-center my-4'>Register</h2>
 
           <div className='form-wrapper'>
