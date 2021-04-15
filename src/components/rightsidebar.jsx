@@ -63,30 +63,31 @@ export default class RightSidebar extends Component {
               <h2>Contact1</h2>
             </Navbar.Brand>
           </Navbar>
-
-          <div className='content'>
-            <div className='chatGrid'>{messagesView}</div>
-          </div>
-
-          <div className='bottom'>
-            {/* <Navbar className='bg-light' fixed='bottom'> */}
-            <Form className='m-1'>
-              <Form.Row>
-                <Col sm={11}>
-                  <Form.Control
-                    type='text'
-                    placeholder='Type a message'
-                    className='msgInput mr-sm-2'
-                  />
-                </Col>
-                <Col>
-                  <Button type='button'>Send</Button>
-                </Col>
-              </Form.Row>
-            </Form>
-            {/* </Navbar> */}
-          </div>
         </div>
+
+        <div className='content'>
+          <div className='chatGrid'>{messagesView}</div>
+        </div>
+
+        <div className='bottom'>
+          {/* <Navbar className='bg-light' fixed='bottom'> */}
+          <Form className='m-1'>
+            <Form.Row>
+              <Col sm={11}>
+                <Form.Control
+                  type='text'
+                  placeholder='Type a message'
+                  className='msgInput mr-sm-2'
+                />
+              </Col>
+              <Col>
+                <Button type='button'>Send</Button>
+              </Col>
+            </Form.Row>
+          </Form>
+          {/* </Navbar> */}
+        </div>
+        {/* </div> */}
       </>
     );
   }
