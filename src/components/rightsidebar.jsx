@@ -12,7 +12,10 @@ export default class RightSidebar extends Component {
     super(props);
     this.state = {
       messages: [],
+      sendMsg: '',
     };
+
+    this.handleSendMsg = this.handleSendMsg.bind(this);
   }
   componentDidMount() {
     const msgsArr = [
@@ -31,6 +34,18 @@ export default class RightSidebar extends Component {
     ];
     this.setState({ messages: msgsArr });
   }
+
+  handleSendMsg() {
+    console.log('Message : ', this.state.sendMsg);
+    if (this.state.sendMsg) {
+      const msg = {
+        msg: this.state.sendMsg,
+        sent: true,
+      };
+      this.setState({ messages: [...this.state.messages, msg], sendMsg: '' });
+    }
+  }
+
   render() {
     const messagesView = this.state.messages.map((item, index) => {
       if (!item.sent) {
@@ -79,10 +94,14 @@ export default class RightSidebar extends Component {
                   type='text'
                   placeholder='Type a message'
                   className='msgInput mr-sm-2'
+                  value={this.state.sendMsg}
+                  onChange={(e) => this.setState({ sendMsg: e.target.value })}
                 />
               </Col>
               <Col>
-                <Button type='button'>Send</Button>
+                <Button type='button' onClick={this.handleSendMsg}>
+                  Send
+                </Button>
               </Col>
             </Form.Row>
           </Form>
