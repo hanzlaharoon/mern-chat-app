@@ -43,7 +43,11 @@ export default class Chat extends Component {
       <>
         <div className='row'>
           <div className='col-3' style={{ borderRight: '1px solid #e3e3e3' }}>
-            <LeftSidebar {...this.state} handleSetChat={this.handleSetChat} />
+            <LeftSidebar
+              {...this.state}
+              handleSetChat={this.handleSetChat}
+              handleUpdate={this.fectchData}
+            />
           </div>
           <div className='col-9'>
             <RightSidebar
