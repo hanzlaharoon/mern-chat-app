@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## How to run this project!
+
+1. Open command prompt or git bash inside the directory and run `yarn install` to download dependencies
+2. `cd backend`
+3. `yarn install` to add dependencies of backend.
+4. While inside the root folder, run `yarn start` to start frontend.
+5. Make sure mondodb is running at your machine and db config path is correct.
+6. `cd backend && node server.js` to run backend server
+7. Add data in database by copying the `.json` files from the email attachments.
+8. Open postman and send a post request to `http://localhost:4000/contact/addContact` and paste content of a `.json file` in body of request. Repeat this for each file.
+9. Voila!
+
 ## Available Scripts
 
 In the project directory, you can run:
