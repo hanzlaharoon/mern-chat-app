@@ -44,7 +44,10 @@ export default class Register extends Component {
       .post('http://localhost:4000/user/register', userObj)
       .then((res) => {
         console.log('/user/register', res.data);
-        this.setState({ username: '', password: '' });
+        if (res.data !== null) {
+          this.setState({ username: '', password: '' });
+          this.props.history.push('/chat');
+        }
       })
       .catch((err) => {
         console.log('Error', err);
@@ -77,7 +80,7 @@ export default class Register extends Component {
                 />
               </Form.Group>
 
-              <Button variant='danger' size='lg' block='block' type='submit'>
+              <Button variant='danger' size='lg' block='block' type='submit' disabled={this.state.username && this.state.password ? false : true}>
                 Register
               </Button>
             </Form>
