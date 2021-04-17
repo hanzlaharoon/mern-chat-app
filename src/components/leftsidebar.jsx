@@ -75,7 +75,7 @@ export default class LeftSidebar extends Component {
 
   render() {
     const contactsList = this.props.contacts
-      .filter((item) => item.name.includes(this.state.searchQuery))
+      .filter((item) => item.name.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
       .map((item, index) => {
         return (
           <ListGroup.Item
@@ -85,7 +85,7 @@ export default class LeftSidebar extends Component {
             onClick={this.handleContactSelect}
             style={{ fontSize: '20px' }}
             className={
-              this.props.selectedChat == item._id ? 'selectedContact' : null
+              this.props.selectedChat === item._id ? 'selectedContact' : null
             }
           >
             {/* {`Contact${index + 1}`} */}

@@ -30,7 +30,7 @@ export default class Chat extends Component {
       console.log('/contact ', res);
       if (res.data) {
         this.setState({ contacts: res.data }, () => {
-          if (this.state.selectedChat === 0)
+          if (this.state.selectedChat === 0 && this.state.contacts.length > 0)
             this.setState({ selectedChat: this.state.contacts[0]._id });
         });
       }
