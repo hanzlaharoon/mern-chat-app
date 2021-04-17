@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 // import ListGroup from 'react-bootstrap/ListGroup';
 import Col from 'react-bootstrap/Col';
+import axios from 'axios';
 // import Row from 'react-bootstrap/Row';
 
 export default class RightSidebar extends Component {
@@ -18,49 +19,74 @@ export default class RightSidebar extends Component {
     this.handleSendMsg = this.handleSendMsg.bind(this);
   }
   componentDidMount() {
-    const msgsArr = [
-      { msg: 'Hello', sent: false },
-      { msg: 'How Are You', sent: true },
-      { msg: 'Is everthing fine', sent: false },
-      // { msg: 'Hello', sent: false },
-      // { msg: 'How Are You', sent: true },
-      // { msg: 'Is everthing fine', sent: false },
-      // { msg: 'Hello', sent: false },
-      // { msg: 'How Are You', sent: true },
-      // { msg: 'Is everthing fine', sent: false },
-      // { msg: 'Hello', sent: false },
-      // { msg: 'How Are You', sent: true },
-      // { msg: 'Is everthing fine', sent: false },
-    ];
-    this.setState({ messages: msgsArr });
+    // const msgsArr = [
+    //   { msg: 'Hello', sent: false },
+    //   { msg: 'How Are You', sent: true },
+    //   { msg: 'Is everthing fine', sent: false },
+    //   // { msg: 'Hello', sent: false },
+    //   // { msg: 'How Are You', sent: true },
+    //   // { msg: 'Is everthing fine', sent: false },
+    //   // { msg: 'Hello', sent: false },
+    //   // { msg: 'How Are You', sent: true },
+    //   // { msg: 'Is everthing fine', sent: false },
+    //   // { msg: 'Hello', sent: false },
+    //   // { msg: 'How Are You', sent: true },
+    //   // { msg: 'Is everthing fine', sent: false },
+    // ];
+    // this.setState({ messages: msgsArr });
+    // if (this.props.contact && this.props.contact.messages) {
+    //   this.setState(() =>
+    //     this.setState({ messages: this.props.contact.messages })
+    //   );
+    // }
   }
 
   handleSendMsg() {
-    console.log('Message : ', this.state.sendMsg);
+    // console.log('Message : ', this.state.sendMsg);
+    // if (this.state.sendMsg) {
+    //   const msg = {
+    //     msg: this.state.sendMsg,
+    //     sent: true,
+    //   };
+    //   this.setState({ messages: [...this.state.messages, msg], sendMsg: '' });
+    // }
     if (this.state.sendMsg) {
       const msg = {
-        msg: this.state.sendMsg,
-        sent: true,
+        content: this.state.sendMsg,
       };
-      this.setState({ messages: [...this.state.messages, msg], sendMsg: '' });
+      axios
+        .post(
+          `http://localhost:4000/contact/${this.props.contact._id}/messages`,
+          msg
+        )
+        .then((res) => {
+          console.log('contact/_id/messages ', res);
+          this.props.handleUpdate();
+          this.setState({ sendMsg: '' });
+        })
+        .catch((err) => console.log('Error ', err));
     }
   }
 
   render() {
-    const messagesView = this.state.messages.map((item, index) => {
-      if (!item.sent) {
-        return (
-          <p className='chatMsg' key={index}>
-            {item.msg}
-          </p>
-        );
-      } else
-        return (
-          <p key={index} className='chatMsg sentMsg'>
-            {item.msg}
-          </p>
-        );
-    });
+    const messagesView =
+      this.props.contact &&
+      this.props.contact.messages &&
+      this.props.contact.messages.map((item, index) => {
+        if (item.author !== 'self') {
+          return (
+            <p className='chatMsg' key={index}>
+              {item.content}
+            </p>
+          );
+        } else
+          return (
+            <p key={index} className='chatMsg sentMsg'>
+              {item.content}
+            </p>
+          );
+      });
+
     return (
       <>
         {/* <div className='spaceBtw'> */}
@@ -75,9 +101,14 @@ export default class RightSidebar extends Component {
           }}
         >
           <Navbar.Brand href='#'>
-            <h2>Contact1</h2>
+            {/* <h2>Contact1</h2> */}
+            <h2>
+              {(this.props.contact && this.props.contact.name) || 'contact'}
+            </h2>
           </Navbar.Brand>
-          <small>Group Members</small>
+          {this.props.contact && this.props.contact.group ? (
+            <small>Group Members</small>
+          ) : null}
         </Navbar>
         {/* </div> */}
 

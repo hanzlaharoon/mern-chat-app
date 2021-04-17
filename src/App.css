@@ -36,6 +36,13 @@
     transform: rotate(360deg);
   }
 } */
+.selectedContact {
+  background: #e9ecef;
+}
+.selectedContact:focus {
+  background: #e9ecef;
+}
+
 .spaceBtw {
   /* display: flex;
   flex-direction: column;

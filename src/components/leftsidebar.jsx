@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+// import axios from 'axios';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
 
@@ -14,10 +15,21 @@ export default class LeftSidebar extends Component {
 
     this.handleContactSelect = this.handleContactSelect.bind(this);
 
-    this.state = {};
+    this.state = {
+      // contacts: [],
+      // selectedContact: 0,
+      searchQuery: '',
+    };
   }
+
   handleContactSelect(e) {
     console.log('Contact Selected: ', e.target.value);
+    // this.setState({ selectedContact: e.target.value });
+    this.props.handleSetChat(+e.target.value);
+  }
+
+  handleSearch() {
+    // console.log("")
   }
 
   render() {
@@ -29,8 +41,12 @@ export default class LeftSidebar extends Component {
           value={index}
           onClick={this.handleContactSelect}
           style={{ fontSize: '20px' }}
+          className={
+            this.props.selectedChat == index ? 'selectedContact' : null
+          }
         >
-          {`Contact${index + 1}`}
+          {/* {`Contact${index + 1}`} */}
+          {item.name}
         </ListGroup.Item>
       );
     });
@@ -43,8 +59,9 @@ export default class LeftSidebar extends Component {
               type='text'
               placeholder='Search'
               className=' mr-sm-2'
+              value={this.state.searchQuery}
             />
-            <Button type='submit'>Submit</Button>
+            <Button type='button'>Submit</Button>
           </Form>
         </Navbar>
 

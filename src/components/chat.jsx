@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import LeftSidebar from './leftsidebar';
 import RightSidebar from './rightsidebar';
@@ -14,21 +15,41 @@ export default class Chat extends Component {
       selectedChat: 0,
       contacts: [],
     };
+    this.handleSetChat = this.handleSetChat.bind(this);
+    this.fectchData = this.fectchData.bind(this);
   }
   componentDidMount() {
-    let arr = ['Contact1', 'Contact2', 'Contact3'];
-    // let arr = Array(15).fill(1);
-    this.setState({ contacts: arr });
+    // let arr = ['Contact1', 'Contact2', 'Contact3'];
+    // this.setState({ contacts: arr });
+
+    this.fectchData();
   }
+
+  fectchData() {
+    axios.get('http://localhost:4000/contact').then((res) => {
+      console.log('/contact ', res);
+      if (res.data) {
+        this.setState({ contacts: res.data });
+      }
+    });
+  }
+
+  handleSetChat(value) {
+    this.setState({ selectedChat: value });
+  }
+
   render() {
     return (
       <>
         <div className='row'>
           <div className='col-3' style={{ borderRight: '1px solid #e3e3e3' }}>
-            <LeftSidebar contacts={this.state.contacts} />
+            <LeftSidebar {...this.state} handleSetChat={this.handleSetChat} />
           </div>
           <div className='col-9'>
-            <RightSidebar />
+            <RightSidebar
+              contact={this.state.contacts[this.state.selectedChat]}
+              handleUpdate={this.fectchData}
+            />
           </div>
         </div>
       </>
