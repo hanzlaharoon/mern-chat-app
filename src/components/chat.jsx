@@ -29,7 +29,10 @@ export default class Chat extends Component {
     axios.get('http://localhost:4000/contact').then((res) => {
       console.log('/contact ', res);
       if (res.data) {
-        this.setState({ contacts: res.data });
+        this.setState({ contacts: res.data }, () => {
+          if (this.state.selectedChat === 0)
+            this.setState({ selectedChat: this.state.contacts[0]._id });
+        });
       }
     });
   }
@@ -51,7 +54,9 @@ export default class Chat extends Component {
           </div>
           <div className='col-9'>
             <RightSidebar
-              contact={this.state.contacts[this.state.selectedChat]}
+              contact={this.state.contacts.find(
+                (i) => i._id === this.state.selectedChat
+              )}
               handleUpdate={this.fectchData}
             />
           </div>

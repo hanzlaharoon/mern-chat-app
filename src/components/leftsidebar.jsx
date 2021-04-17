@@ -33,7 +33,7 @@ export default class LeftSidebar extends Component {
   handleContactSelect(e) {
     console.log('Contact Selected: ', e.target.value);
     // this.setState({ selectedContact: e.target.value });
-    this.props.handleSetChat(+e.target.value);
+    this.props.handleSetChat(e.target.value);
   }
 
   handleSearch() {
@@ -81,11 +81,11 @@ export default class LeftSidebar extends Component {
           <ListGroup.Item
             action
             key={index}
-            value={index}
+            value={item._id}
             onClick={this.handleContactSelect}
             style={{ fontSize: '20px' }}
             className={
-              this.props.selectedChat == index ? 'selectedContact' : null
+              this.props.selectedChat == item._id ? 'selectedContact' : null
             }
           >
             {/* {`Contact${index + 1}`} */}
