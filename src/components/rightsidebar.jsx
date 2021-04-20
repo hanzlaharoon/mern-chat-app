@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-// import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-// import ListGroup from 'react-bootstrap/ListGroup';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
-// import Row from 'react-bootstrap/Row';
-
 export default class RightSidebar extends Component {
   constructor(props) {
     super(props);

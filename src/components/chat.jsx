@@ -2,11 +2,6 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import LeftSidebar from './leftsidebar';
 import RightSidebar from './rightsidebar';
-// import Nav from 'react-bootstrap/Nav';
-// import Navbar from 'react-bootstrap/Navbar';
-// import Container from 'react-bootstrap/Container';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
 
 export default class Chat extends Component {
   constructor(props) {
