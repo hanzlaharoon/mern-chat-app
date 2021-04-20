@@ -14,38 +14,8 @@ export default class RightSidebar extends Component {
 
     this.handleSendMsg = this.handleSendMsg.bind(this);
   }
-  componentDidMount() {
-    // const msgsArr = [
-    //   { msg: 'Hello', sent: false },
-    //   { msg: 'How Are You', sent: true },
-    //   { msg: 'Is everthing fine', sent: false },
-    //   // { msg: 'Hello', sent: false },
-    //   // { msg: 'How Are You', sent: true },
-    //   // { msg: 'Is everthing fine', sent: false },
-    //   // { msg: 'Hello', sent: false },
-    //   // { msg: 'How Are You', sent: true },
-    //   // { msg: 'Is everthing fine', sent: false },
-    //   // { msg: 'Hello', sent: false },
-    //   // { msg: 'How Are You', sent: true },
-    //   // { msg: 'Is everthing fine', sent: false },
-    // ];
-    // this.setState({ messages: msgsArr });
-    // if (this.props.contact && this.props.contact.messages) {
-    //   this.setState(() =>
-    //     this.setState({ messages: this.props.contact.messages })
-    //   );
-    // }
-  }
 
   handleSendMsg() {
-    // console.log('Message : ', this.state.sendMsg);
-    // if (this.state.sendMsg) {
-    //   const msg = {
-    //     msg: this.state.sendMsg,
-    //     sent: true,
-    //   };
-    //   this.setState({ messages: [...this.state.messages, msg], sendMsg: '' });
-    // }
     if (this.state.sendMsg) {
       const msg = {
         content: this.state.sendMsg,
@@ -97,7 +67,6 @@ export default class RightSidebar extends Component {
           }}
         >
           <Navbar.Brand href='#'>
-            {/* <h2>Contact1</h2> */}
             <h2>
               {(this.props.contact && this.props.contact.name) || 'contact'}
             </h2>

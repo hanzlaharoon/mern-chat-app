@@ -19,8 +19,6 @@ export default class LeftSidebar extends Component {
     this.handleSendBD = this.handleSendBD.bind(this);
 
     this.state = {
-      // contacts: [],
-      // selectedContact: 0,
       searchQuery: '',
       showBroadcast: false,
       broadcastMessage: '',
@@ -29,12 +27,10 @@ export default class LeftSidebar extends Component {
 
   handleContactSelect(e) {
     console.log('Contact Selected: ', e.target.value);
-    // this.setState({ selectedContact: e.target.value });
     this.props.handleSetChat(e.target.value);
   }
 
   handleSearch() {
-    // console.log("")
     this.setState({ searchQuery: '' });
   }
 
@@ -85,7 +81,6 @@ export default class LeftSidebar extends Component {
               this.props.selectedChat === item._id ? 'selectedContact' : null
             }
           >
-            {/* {`Contact${index + 1}`} */}
             {item.name}
           </ListGroup.Item>
         );

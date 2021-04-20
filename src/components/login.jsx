@@ -71,9 +71,6 @@ export default class Login extends Component {
                   type='text'
                   value={this.state.username}
                   onChange={this.onChangeUsername}
-                //   required={true}
-                //   min={4}
-                //   max={15}
                 />
               </Form.Group>
 
@@ -83,9 +80,6 @@ export default class Login extends Component {
                   type='password'
                   value={this.state.password}
                   onChange={this.onChangePassword}
-                //   required={true}
-                //   min={3}
-                //   max={15}
                 />
               </Form.Group>
 
