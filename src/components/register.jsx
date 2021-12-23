@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
+import useAuthApi from "../hooks/useAuthApi";
 
 export default function Register() {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [{ loading, data, error }, fetchApi] = useAuthApi();
+
+  //  handle on register success
+  useEffect(() => {
+    if (!loading && !error) {
+      if (data) {
+        setUsername("");
+        setPassword("");
+        history.push("/chat");
+      }
+    }
+  }, [loading, data, error]);
 
   function onChangeUsername(e) {
     setUsername(e.target.value);
@@ -20,28 +32,7 @@ export default function Register() {
   function onSubmit(e) {
     e.preventDefault();
 
-    console.log(`Student successfully created!`);
-    console.log(`Username: ${username}`);
-    console.log(`Password: ${password}`);
-
-    const userObj = {
-      username: username.toLowerCase(),
-      password: password,
-    };
-
-    axios
-      .post("http://localhost:4000/user/register", userObj)
-      .then((res) => {
-        console.log("/user/register", res.data);
-        if (res.data !== null) {
-          setUsername("");
-          setPassword("")
-          history.push("/chat");
-        }
-      })
-      .catch((err) => {
-        console.log("Error", err);
-      });
+    fetchApi("user/register", username, password);
   }
 
   return (

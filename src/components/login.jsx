@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
+import useAuthApi from "../hooks/useAuthApi";
 
 export default function Login() {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [{ loading, data, error }, fetchApi] = useAuthApi();
+
+  //  handle on login success
+  useEffect(() => {
+    if (!loading && !error) {
+      if (data) {
+        setUsername("");
+        setPassword("");
+        history.push("/chat");
+      }
+    }
+  }, [loading, data, error]);
 
   function onChangeUsername(e) {
     setUsername(e.target.value);
@@ -17,34 +29,10 @@ export default function Login() {
     setPassword(e.target.value);
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
 
-    // console.log(`Student successfully logged In!`);
-    console.log(`Name: ${username}`);
-    console.log(`Email: ${password}`);
-
-    const userObj = {
-      username: username.toLowerCase(),
-      password: password,
-    };
-
-    axios
-      .post("http://localhost:4000/user/login", userObj)
-      .then((res) => {
-        console.log("/user/login", res);
-        if (res.data !== null) {
-          console.log("Login Successfull");
-          setUsername("");
-          setPassword("");
-          history.push("/chat");
-        } else {
-          console.log("Login Failed");
-        }
-      })
-      .catch((err) => {
-        console.log("Error", err);
-      });
+    fetchApi("user/login", username.toLowerCase(), password);
   }
 
   return (
