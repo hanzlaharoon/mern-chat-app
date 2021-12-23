@@ -1,96 +1,90 @@
-import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
-export default class Register extends Component {
-  constructor(props) {
-    super(props);
+export default function Register() {
+  const history = useHistory();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-    // Setting up functions
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-
-    // Setting up state
-    this.state = {
-      username: '',
-      password: '',
-    };
+  function onChangeUsername(e) {
+    setUsername(e.target.value);
   }
 
-  onChangeUsername(e) {
-    this.setState({ username: e.target.value });
+  function onChangePassword(e) {
+    setPassword(e.target.value);
   }
 
-  onChangePassword(e) {
-    this.setState({ password: e.target.value });
-  }
-
-  onSubmit(e) {
+  function onSubmit(e) {
     e.preventDefault();
 
     console.log(`Student successfully created!`);
-    console.log(`Username: ${this.state.username}`);
-    console.log(`Password: ${this.state.password}`);
+    console.log(`Username: ${username}`);
+    console.log(`Password: ${password}`);
 
     const userObj = {
-      username: this.state.username.toLowerCase(),
-      password: this.state.password,
+      username: username.toLowerCase(),
+      password: password,
     };
 
     axios
-      .post('http://localhost:4000/user/register', userObj)
+      .post("http://localhost:4000/user/register", userObj)
       .then((res) => {
-        console.log('/user/register', res.data);
+        console.log("/user/register", res.data);
         if (res.data !== null) {
-          this.setState({ username: '', password: '' });
-          this.props.history.push('/chat');
+          setUsername("");
+          setPassword("")
+          history.push("/chat");
         }
       })
       .catch((err) => {
-        console.log('Error', err);
+        console.log("Error", err);
       });
   }
 
-  render() {
-    return (
-      <div className='row justify-content-center'>
-        <div className='col-4'>
-          <h2 className='text-center my-4'>Register</h2>
+  return (
+    <div className="row justify-content-center">
+      <div className="col-4">
+        <h2 className="text-center my-4">Register</h2>
 
-          <div className='form-wrapper'>
-            <Form onSubmit={this.onSubmit}>
-              <Form.Group controlId='Usename'>
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type='text'
-                  value={this.state.username}
-                  onChange={this.onChangeUsername}
-                />
-              </Form.Group>
+        <div className="form-wrapper">
+          <Form onSubmit={onSubmit}>
+            <Form.Group controlId="Usename">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                value={username}
+                onChange={onChangeUsername}
+              />
+            </Form.Group>
 
-              <Form.Group controlId='Password'>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type='password'
-                  value={this.state.password}
-                  onChange={this.onChangePassword}
-                />
-              </Form.Group>
+            <Form.Group controlId="Password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={onChangePassword}
+              />
+            </Form.Group>
 
-              <Button variant='danger' size='lg' block='block' type='submit' disabled={this.state.username && this.state.password ? false : true}>
-                Register
-              </Button>
-            </Form>
+            <Button
+              variant="danger"
+              size="lg"
+              block="block"
+              type="submit"
+              disabled={username && password ? false : true}
+            >
+              Register
+            </Button>
+          </Form>
 
-            <small>
-              Already have an account? <Link to={'/login'}>Login here</Link>
-            </small>
-          </div>
+          <small>
+            Already have an account? <Link to={"/login"}>Login here</Link>
+          </small>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
