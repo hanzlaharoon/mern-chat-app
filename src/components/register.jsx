@@ -3,12 +3,19 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory } from "react-router-dom";
 import useAuthApi from "../hooks/useAuthApi";
+import { withAuth } from "../store";
 
-export default function Register() {
+export const Register = withAuth(({ isLoggedIn, user, setLogin, setUser }) => {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [{ loading, data, error }, fetchApi] = useAuthApi();
+
+  useEffect(() => {
+    if (isLoggedIn && !!user) {
+      history.push("/chat");
+    }
+  }, [isLoggedIn, user]);
 
   //  handle on register success
   useEffect(() => {
@@ -16,7 +23,8 @@ export default function Register() {
       if (data) {
         setUsername("");
         setPassword("");
-        history.push("/chat");
+        setLogin(true);
+        setUser(username);
       }
     }
   }, [loading, data, error]);
@@ -78,4 +86,4 @@ export default function Register() {
       </div>
     </div>
   );
-}
+});

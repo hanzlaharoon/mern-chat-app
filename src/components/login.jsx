@@ -3,12 +3,19 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory } from "react-router-dom";
 import useAuthApi from "../hooks/useAuthApi";
+import { withAuth } from "../store";
 
-export default function Login() {
+export const Login = withAuth(({ isLoggedIn, user, setLogin, setUser }) => {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [{ loading, data, error }, fetchApi] = useAuthApi();
+
+  useEffect(() => {
+    if (isLoggedIn && !!user) {
+      history.push("/chat");
+    }
+  }, [isLoggedIn, user]);
 
   //  handle on login success
   useEffect(() => {
@@ -16,7 +23,8 @@ export default function Login() {
       if (data) {
         setUsername("");
         setPassword("");
-        history.push("/chat");
+        setLogin(true);
+        setUser(username);
       }
     }
   }, [loading, data, error]);
@@ -79,4 +87,4 @@ export default function Login() {
       </div>
     </div>
   );
-}
+});
