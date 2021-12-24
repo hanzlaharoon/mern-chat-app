@@ -1,100 +1,90 @@
-import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { Link, useHistory } from "react-router-dom";
+import useAuthApi from "../hooks/useAuthApi";
+import { withAuth } from "../store";
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
+export const Login = withAuth(({ isLoggedIn, user, setLogin, setUser }) => {
+  const history = useHistory();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [{ loading, data, error }, fetchApi] = useAuthApi();
 
-    // Setting up functions
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+  useEffect(() => {
+    if (isLoggedIn && !!user) {
+      history.push("/chat");
+    }
+  }, [isLoggedIn, user]);
 
-    // Setting up state
-    this.state = {
-      username: '',
-      password: '',
-    };
+  //  handle on login success
+  useEffect(() => {
+    if (!loading && !error) {
+      if (data) {
+        setUsername("");
+        setPassword("");
+        setLogin(true);
+        setUser(username);
+      }
+    }
+  }, [loading, data, error]);
+
+  function onChangeUsername(e) {
+    setUsername(e.target.value);
   }
 
-  onChangeUsername(e) {
-    this.setState({ username: e.target.value });
+  function onChangePassword(e) {
+    setPassword(e.target.value);
   }
 
-  onChangePassword(e) {
-    this.setState({ password: e.target.value });
-  }
-
-  onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
 
-    // console.log(`Student successfully logged In!`);
-    console.log(`Name: ${this.state.username}`);
-    console.log(`Email: ${this.state.password}`);
-
-    const userObj = {
-      username: this.state.username.toLowerCase(),
-      password: this.state.password,
-    };
-
-    axios
-      .post('http://localhost:4000/user/login', userObj)
-      .then((res) => {
-        console.log('/user/login', res);
-        if (res.data !== null) {
-          console.log('Login Successfull');
-          this.setState({ username: '', password: '' });
-          this.props.history.push('/chat');
-        } else {
-          console.log('Login Failed');
-        }
-      })
-      .catch((err) => {
-        console.log('Error', err);
-      });
+    fetchApi("user/login", username.toLowerCase(), password);
   }
 
-  render() {
-    return (
-      <div className='row justify-content-center'>
-        <div className='col-4'>
-          <h2 className='text-center my-4'>Login</h2>
+  return (
+    <div className="row justify-content-center">
+      <div className="col-4">
+        <h2 className="text-center my-4">Login</h2>
 
-          <div className='form-wrapper'>
-            <Form onSubmit={this.onSubmit}>
-              <Form.Group controlId='Username'>
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type='text'
-                  value={this.state.username}
-                  onChange={this.onChangeUsername}
-                />
-              </Form.Group>
+        <div className="form-wrapper">
+          <Form onSubmit={onSubmit}>
+            <Form.Group controlId="Username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                value={username}
+                onChange={onChangeUsername}
+              />
+            </Form.Group>
 
-              <Form.Group controlId='Password'>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type='password'
-                  value={this.state.password}
-                  onChange={this.onChangePassword}
-                />
-              </Form.Group>
+            <Form.Group controlId="Password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={onChangePassword}
+              />
+            </Form.Group>
 
-              <Button variant='success' size='lg' block='block' type='submit' disabled={this.state.username && this.state.password ? false : true}>
-                Login
-              </Button>
-            </Form>
+            <Button
+              variant="success"
+              size="lg"
+              block="block"
+              type="submit"
+              disabled={username && password ? false : true}
+            >
+              Login
+            </Button>
+          </Form>
 
-            <small>
-              Don't have an account?{' '}
-              <Link to={'/register'}>Create an account</Link>
-            </small>
-          </div>
+          <small>
+            Don't have an account?{" "}
+            <Link to={"/register"}>Create an account</Link>
+          </small>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+});
